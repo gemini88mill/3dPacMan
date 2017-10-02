@@ -9,7 +9,7 @@ var spotLight;
 
 var groundplane;
 var walls;
-var sphere;
+var ball;
 
 <!-- 3. Add the following two lines. -->
 Physijs.scripts.worker = 'libs/physijs_worker.js';
@@ -20,7 +20,7 @@ function init()
 {
     <!-- 4. Edit the scene creation -->
     scene = new Physijs.Scene();
-    scene.setGravity(new THREE.Vector3( 0, -10, 0 ));
+    scene.setGravity(new THREE.Vector3( 0, 0, -30 ));
 
 
     setupCamera();
@@ -30,6 +30,7 @@ function init()
     //objects
     createGroundPlane();
     createBall();
+    createWalls();
 
 
     // Output to the stream
@@ -67,7 +68,7 @@ function setupCamera()
 {
     camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 1000 );
     camera.position.x = 0;
-    camera.position.y = 0;
+    camera.position.y = -150;
     camera.position.z = 200;
     camera.lookAt( scene.position );
 }
@@ -84,12 +85,13 @@ function setupRenderer()
 function addSpotLight()
 {
     spotLight = new THREE.SpotLight( 0xffffff );
-    spotLight.position.set( 10, 100, 100 );
+    spotLight.position.set( 0, 0, 100 );
     spotLight.shadowCameraNear = 10;
     spotLight.shadowCameraFar = 100;
     spotLight.castShadow = true;
     spotLight.intensity = 2;
     scene.add(spotLight);
 }
+
 
 window.onload = init;

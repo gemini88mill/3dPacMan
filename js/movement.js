@@ -1,31 +1,42 @@
-
+ball.__dirtyPosition = true;
+ball.__dirtyRotation = true;
 
 function cameraMovement(){
     if( Key.isDown( Key.A ) )
     {
-        camera.rotation.y += 0.05;
+        camera.position.x -= 0.5;
+        //aball.__dirtyPosition = true;
+
+        ball.position.x -= 0.5;
+        //sphere.setLinearVelocity(.01);
 
     }
     if( Key.isDown( Key.D ) )
     {
-        camera.rotation.y -= 0.05;
-
+        camera.position.x += 0.5;
+        ball.position.x += 0.5;
     }
 
     if( Key.isDown( Key.W ) )
     {
-        var deltaX = Math.sin(camera.rotation.y)*.8;
-        var deltaZ = Math.cos(camera.rotation.y)*.8;
-        camera.position.x -= deltaX;
-        camera.position.z -= deltaZ;
 
-        sphere.position.x += 20;
+        camera.position.y += 0.5;
+        ball.position.y += 0.5;
+        // var deltaX = Math.sin(camera.rotation.y)*.8;
+        // var deltaZ = Math.cos(camera.rotation.y)*.8;
+        // camera.position.x -= deltaX;
+        // camera.position.z -= deltaZ;
+
+        //sssphere.position.x += 20;
     }
     if( Key.isDown( Key.S ) )
     {
-        var deltaX = Math.sin(camera.rotation.y)*.8;
-        var deltaZ = Math.cos(camera.rotation.y)*.8;
-        camera.position.x += deltaX;
-        camera.position.z += deltaZ;
+
+        camera.position.y -= 0.5;
+        ball.position.y -= 0.5;
+        // var deltaX = Math.sin(camera.rotation.y)*.8;
+        // var deltaZ = Math.cos(camera.rotation.y)*.8;
+        // camera.position.x += deltaX;
+        // camera.position.z += deltaZ;
     }
 }
