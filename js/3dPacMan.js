@@ -10,6 +10,14 @@ var spotLight;
 var groundplane;
 var walls;
 var ball;
+var collect;
+var ghosts = [];
+var wallBorder;
+
+var ballPosition;
+var ghostPosition;
+
+var wallHit = false;
 
 <!-- 3. Add the following two lines. -->
 Physijs.scripts.worker = 'libs/physijs_worker.js';
@@ -31,6 +39,10 @@ function init()
     createGroundPlane();
     createBall();
     createWalls();
+    collect = createCollectablesArray();
+    //createCollectible(30,0);
+    createGhosts();
+
 
 
     // Output to the stream
@@ -40,12 +52,21 @@ function init()
     render();
 }
 
+//var ghost = getGhost('inky');
+
 function render()
 {
 
 
     scene.simulate();
     cameraMovement();
+    // ghostMovement(ghosts[0]);
+    // ghostMovement(ghosts[1]);
+    // ghostMovement(ghosts[2]);
+    // ghostMovement(ghosts[3]);
+    //collectiblePosition(collect);
+
+    //checkHit();
 
     // Request animation frame
     requestAnimationFrame( render );
@@ -93,5 +114,54 @@ function addSpotLight()
     scene.add(spotLight);
 }
 
+
+
+function loadBackgroundMusic(){
+    //Create an AudioListener and add it to the camera
+    var listener = new THREE.AudioListener();
+    camera.add( listener );
+
+// create a global audio source
+    var sound = new THREE.Audio( listener );
+
+    var audioLoader = new THREE.AudioLoader();
+
+//Load a sound and set it as the Audio object's buffer
+    audioLoader.load( 'assets/music/background_music/StarFighter.mp3', function( buffer ) {
+        sound.setBuffer( buffer );
+        sound.setLoop(false);
+        sound.setVolume(0.2);
+        sound.play();
+    });
+}
+
+function playSound(soundEffectPath){
+    //Create an AudioListener and add it to the camera
+    var listener = new THREE.AudioListener();
+    camera.add( listener );
+
+// create a global audio source
+    var sound = new THREE.Audio( listener );
+
+    var audioLoader = new THREE.AudioLoader();
+
+//Load a sound and set it as the Audio object's buffer
+    audioLoader.load( soundEffectPath, function( buffer ) {
+        sound.setBuffer( buffer );
+        sound.setLoop(false);
+        sound.setVolume(0.2);
+        sound.play();
+    });
+
+}
+
+function hintMenu(){
+    var x = document.getElementById('hintMenu');
+    if(x.style.display === 'none'){
+        x.style.display = 'block';
+    } else{
+        x.style.display = 'none';
+    }
+}
 
 window.onload = init;
