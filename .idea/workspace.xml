@@ -5,14 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="14b0c420-b2fe-4267-a78f-06d156402caf" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/js/walls.js" afterPath="$PROJECT_DIR$/js/generate.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/3dPacMan.js" afterPath="$PROJECT_DIR$/js/3dPacMan.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/movement.js" afterPath="$PROJECT_DIR$/js/movement.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/objects.js" afterPath="$PROJECT_DIR$/js/objects.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/utils.js" afterPath="$PROJECT_DIR$/js/utils.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/keyboard.js" afterPath="$PROJECT_DIR$/libs/keyboard.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -249,12 +242,20 @@
       <workItem from="1506990474768" duration="22854000" />
       <workItem from="1507165124154" duration="194000" />
       <workItem from="1507228473108" duration="15158000" />
-      <workItem from="1507333771359" duration="10454000" />
+      <workItem from="1507333771359" duration="10486000" />
     </task>
+    <task id="LOCAL-00001" summary="updated">
+      <created>1507386700237</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1507386700237</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="75045000" />
+    <option name="totallyTimeSpent" value="75077000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1919" y="-4" width="1922" height="1085" extended-state="6" />
@@ -283,6 +284,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="updated" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
