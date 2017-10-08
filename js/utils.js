@@ -1,72 +1,6 @@
-function rotateObject(object,degreeX, degreeY, degreeZ){
-
-    degreeX = (degreeX * Math.PI)/180;
-    degreeY = (degreeY * Math.PI)/180;
-    degreeZ = (degreeZ * Math.PI)/180;
-
-    object.rotateX(degreeX);
-    object.rotateY(degreeY);
-    object.rotateZ(degreeZ);
-
-}
-
-function flattenVector(vector3){
-    return{
-        x: Math.ceil(vector3.x),
-        y: Math.ceil(vector3.y),
-        z: Math.ceil(vector3.z)
-    };
-}
-
-function getBoxBoundary(box){
-    return{
-        minX: box.position.x + box.geometry.boundingBox.min.x,
-        maxX: box.position.x + box.geometry.boundingBox.max.x,
-        minY: box.position.y + box.geometry.boundingBox.min.y,
-        maxY: box.position.y + box.geometry.boundingBox.max.y,
-        minZ: box.position.z + box.geometry.boundingBox.min.z,
-        maxZ: box.position.z + box.geometry.boundingBox.max.z
-    };
-}
 
 
 
-//todo get sphereBoundary
-
-function isPointInsideAABB(point, wall) {
-    return (point.x >= wall.minX && point.x <= wall.maxX) &&
-        (point.y >= wall.minY && point.y <= wall.maxY) &&
-        (point.z >= wall.minY && point.z <= wall.maxZ);
-}
-
-function vector3ToVector2(vector3){
-    return new THREE.Vector2(vector3.x, vector3.y);
-}
-
-function getGhost(ghostName){
-    ghosts.forEach(function (ghost) {
-        if(ghost.name === ghostName){
-            //console.log(ghost);
-            return ghost;
-        }
-    })
-
-}
-
-function dir(object, direction, speed){
-
-    switch(direction){
-        case 'left': speed = -.2; break;
-        case 'right': speed = .2; break;
-        case 'up': speed = -.2; break;
-        case 'down': speed = .2; break;
-    }
-
-}
-
-function getRandom(){
-    return Math.floor(((Math.random() * 400) + 1) % 4);
-}
 
 function collisionListener(ball){
     ball.addEventListener('collision', function (otherObject, linearVelocity, angularVelocity, contact_normal) {
@@ -84,6 +18,46 @@ function collisionListener(ball){
         }
 
     });
+}
+
+function changeDirection(vector){
+    if(vector.x !== 0){
+        console.log(vector.x);
+    } else{
+        return .2;
+    }
+}
+
+function onWallCollision(ghost, props, object, linearVelocity, angularVelocity) {
+    console.log(object.name);
+    var currentX = props.ghostSpeedX;
+    var currentY = props.ghostSpeedY;
+
+    props.ghostSpeedX = 0;
+    props.ghostSpeedY = 0;
+
+    props.direction = Math.floor((Math.random() * 2) + 1);
+
+    if(props.direction === 1 && currentX >= 0){
+        props.ghostSpeedX = -.2; //left
+    }
+    if(props.direction === 2 && currentX <= 0){
+        props.ghostSpeedX = .2; //right
+    }
+    if(props.direction === 3 && currentY >= 0){
+        props.ghostSpeedY = -.2; //down
+    }
+    if(props.direction === 4 && currentY <= 0){
+        props.ghostSpeedY = .2; //up
+    }
+}
+
+function coinFlip() {
+    if(Math.floor(Math.random() * 2) === 0) {
+        return 0.2;
+    }
+
+    return -.2;
 }
 
 

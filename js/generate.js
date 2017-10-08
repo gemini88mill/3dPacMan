@@ -198,7 +198,7 @@ function createCollectablesArray(){
 function generateCollectables(){
     var geo = new THREE.SphereGeometry(1);
     var mat = Physijs.createMaterial(new THREE.MeshLambertMaterial({color: '#ffffff'}));
-    var collect = new Physijs.SphereMesh(geo, mat);
+    var collect = new Physijs.SphereMesh(geo, mat, 0);
 
     collect.name = 'collect';
     return collect;
@@ -207,7 +207,7 @@ function generateCollectables(){
 function generateGhost(color, name){
     var geo = new THREE.BoxGeometry(5,5,5);
     var material = new Physijs.createMaterial(new THREE.MeshLambertMaterial({color: color}), .95, .95);
-    var ghost = new Physijs.BoxMesh(geo, material, 2);
+    var ghost = new Physijs.BoxMesh(geo, material, 1);
 
     ghost.name = name;
     return ghost;

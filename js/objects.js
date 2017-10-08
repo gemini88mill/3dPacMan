@@ -14,12 +14,71 @@ function createGroundPlane()
     scene.add( groundPlane );
 }
 
+function createGhost(startPos, color, name){
+    var ghost = generateGhost(color, name);
+
+    ghost.position.x = startPos;
+    ghost.position.z = 5;
+    scene.add(ghost);
+
+    ghost.__dirtyPosition = true;
+    ghost.__dirtyRotation = true;
+
+    ghost.addEventListener('collision', function (otherObject, linear, angular) {
+        if(otherObject.name === 'player'){
+            console.log('hit player');
+        }
+        if(otherObject.name === 'wall'){
+            console.log('hit wall');
+            if(speedX > 0){
+                console.log('i am going right');
+                speedX = 0;
+                if(this.position.y > ball.position.y){
+                    speedY = -.2;
+                }else{
+                    speedY = .2;
+                }
+            }
+            if(speedX < 0){
+                console.log('i am going left');
+                speedX = 0;
+                if(this.position.y > ball.position.y){
+                    speedY = -.2;
+                }else{
+                    speedY = .2;
+                }
+            }
+            if(speedY > 0){
+                console.log('I am going up or down');
+                speedY = 0;
+                if(this.position.x > ball.position.x){
+                    speedX = -.2;
+                }else{
+                    speedX = .2;
+                }
+            }
+            if(speedY < 0){
+                console.log('I am going up or down');
+                speedY = 0;
+                if(this.position.x > ball.position.x){
+                    speedX = -.2;
+                }else{
+                    speedX = .2;
+                }
+            }
+        }
+    });
+
+    return ghost;
+}
+
 
 
 function createGhosts(){
 
     ghostPosition = [];
     ghosts = [];
+    ghostsProp = [];
 
     ghosts.push(generateGhost('#00FF00', 'inky'));
     ghosts.push(generateGhost('#FF0000', 'binky'));
@@ -33,69 +92,55 @@ function createGhosts(){
 
 
 
-    for(var i = 0; i < ghosts.length; i++){
-        // ghosts[i].__dirtyPosition = true;
-        // ghosts[i].__dirtyRotation = true;
-        ghosts[i].position.z = 2.5;
-        scene.add(ghosts[i]);
+    for(var i = 0; i < ghosts.length; i++) {
+        (function(i) { // here
 
+            ghosts[i].position.z = 5;
+            scene.add(ghosts[i]);
 
+            ghostsProp.push({
+                ghostSpeedX: coinFlip(),
+                ghostSpeedY: coinFlip(),
+                direction: 0
+            });
 
-        ghosts[i].addEventListener('collision', function (otherObject, linearVelocity, angularVelocity) {
-            if(otherObject.name === 'player'){
-                //console.log('oops');
-            }
-        });
+            ghosts[i].addEventListener('collision', function (otherObject, linearVelocity, angularVelocity) {
 
+                if(otherObject.name === 'player'){
+                    console.log(otherObject.name);
+                }
+                if(otherObject.name === 'wall'){
+                    onWallCollision(ghosts[i], ghostsProp[i], otherObject, linearVelocity, angularVelocity);
+                }
+            });
+
+        })(i); // here
     }
 
-    //console.log(ghostPosition);
 
-    //ghost.position.z = 4;
-    //scene.add(ghosts);
-
-    //ghost with physics
-    // var blueGhost = generateWall(5,5,5);
-    // blueGhost.position.z = 10;
-    // scene.add(blueGhost);
 
 }
 
 function createBall(){
     var geometry = new THREE.SphereGeometry( 5 );
     var material = Physijs.createMaterial(new THREE.MeshLambertMaterial({color: '#ffff00'}));
-    ball = new Physijs.SphereMesh( geometry, material, 1 );
+    ball = new Physijs.SphereMesh( geometry, material, 2 );
 
     ball.name = 'player';
     ball.position.z = 6;
     ball.position.y = -15;
 
-    //console.log(ball);
     scene.add(ball);
     
-    // ball.addEventListener('collision', function (otherObject, linearVelocity, angularVelocity, contact_normal) {
-    //     if(otherObject.name !== 'groundPlane') {
-    //         console.log(otherObject.name);
-    //     }
-    //     if(otherObject.name === 'wall'){
-    //         wallHit = true;
-    //
-    //     }
-    //
-    // })
+
 
 }
 
 function createCollectible(posX, posY){
-    // var geo = new THREE.SphereGeometry(2);
-    // var mat = Physijs.createMaterial(new THREE.MeshLambertMaterial({color: '#ffffff'}));
-    // var collect = new Physijs.SphereMesh(geo, mat);
+
 
     var collect = generateCollectables();
 
-    //collect = new THREE.Object3D();
-    //collect.add(collect);
-    //collect.name = 'collect';
     collect.position.z = 1;
     collect.position.x = posX;
     collect.position.y = posY;
@@ -118,10 +163,6 @@ function createWalls(){
     walls = [];
     wallBorder = [];
 
-    // var wall = new THREE.BoxGeometry(6,22,12);
-    // var material = Physijs.createMaterial(new THREE.MeshLambertMaterial({color: 'light grey'}), .95, .95);
-    // var msh = new Physijs.BoxMesh(wall, material);
-
     for(var i = 0; i<2; i++) {
         var smallWallVertical = generateWall(6,22,6);
         switch(i){
@@ -135,7 +176,6 @@ function createWalls(){
 
         walls.push(smallWallVertical);
 
-        // scene.add(smallWallVertical);
     }
 
     for(i = 0; i < 4; i++){
@@ -152,7 +192,6 @@ function createWalls(){
         wallBorder.push(smallWallHorizontal.position);
         walls.push(smallWallHorizontal);
 
-        // scene.add(smallWallHorizontal);
     }
 
     for(i = 0; i<2; i++){
@@ -167,7 +206,6 @@ function createWalls(){
         wallBorder.push(smallWallHorizontal2.position);
         walls.push(smallWallHorizontal2);
 
-        // scene.add(smallWallHorizontal2);
     }
 
     for(i = 0; i < 3; i++) {
@@ -184,7 +222,6 @@ function createWalls(){
         wallBorder.push(tTopWall.position);
         walls.push(tTopWall);
 
-        // scene.add(tTopWall);
     }
 
     for(i = 0; i < 4; i++) {
@@ -201,7 +238,6 @@ function createWalls(){
 
         wallBorder.push(tBottom.position);
         walls.push(tBottom);
-        // scene.add(tBottom);
     }
 
     for(i = 0; i < 2; i++){
@@ -216,7 +252,6 @@ function createWalls(){
         wallBorder.push(tTopSide.position);
         walls.push(tTopSide);
 
-        // scene.add(tTopSide);
     }
 
     for(i = 0; i < 2; i++){
@@ -231,7 +266,6 @@ function createWalls(){
         wallBorder.push(tBottomSide.position);
         walls.push(tBottomSide);
 
-        //scene.add(tBottomSide);
     }
 
     for(i = 0; i < 4; i++){
@@ -248,7 +282,6 @@ function createWalls(){
         wallBorder.push(boxTop.position);
         walls.push(boxTop);
 
-        //scene.add(boxTop);
     }
 
     for(i = 0; i < 2; i++){
@@ -263,7 +296,6 @@ function createWalls(){
         wallBorder.push(tInvertedTop.position);
         walls.push(tInvertedTop);
 
-        //scene.add(tInvertedTop);
     }
 
     for(i = 0; i < 4; i++){
@@ -280,24 +312,12 @@ function createWalls(){
         wallBorder.push(landTBottom.position);
         walls.push(landTBottom);
 
-        //scene.add(landTBottom);
     }
 
     for(i = 0; i < walls.length; i++) walls[i].position.z = 3;
     for(i = 0; i < walls.length; i++) scene.add(walls[i]);
-
-
-
-
-    // boxWall.position.x = 71;
-    // boxWall.position.y = 50;
-    //scene.add(boxWall);
-    // smallWall.position.x = 43; //position
-    // smallWall.position.y = -17;
-
 }
 
 
-//todo create collecting balls
 
 

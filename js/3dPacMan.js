@@ -12,10 +12,16 @@ var walls;
 var ball;
 var collect;
 var ghosts = [];
+var ghostsProp = [];
 var wallBorder;
 
 var ballPosition;
 var ghostPosition;
+
+var speedX = 0;
+var speedY = .2;
+
+
 
 var wallHit = false;
 
@@ -28,7 +34,7 @@ function init()
 {
     <!-- 4. Edit the scene creation -->
     scene = new Physijs.Scene();
-    scene.setGravity(new THREE.Vector3( 0, 0, -30 ));
+    scene.setGravity(new THREE.Vector3( 0, 0, -100 ));
 
 
     setupCamera();
@@ -41,7 +47,10 @@ function init()
     createWalls();
     collect = createCollectablesArray();
     //createCollectible(30,0);
-    createGhosts();
+    ghosts.push(createGhost(0, '#00ff00', 'inky'));
+    ghosts.push(createGhost(-10, '#ff0ff0', 'pinky'));
+    ghosts.push(createGhost(10, '#0000ff', 'blinky'));
+    ghosts.push(createGhost(20, '#ff0000', 'bob'));
 
 
 
@@ -52,18 +61,18 @@ function init()
     render();
 }
 
-//var ghost = getGhost('inky');
 
 function render()
 {
 
 
-    scene.simulate();
+    scene.simulate(); //physics
     cameraMovement();
-    // ghostMovement(ghosts[0]);
-    // ghostMovement(ghosts[1]);
-    // ghostMovement(ghosts[2]);
-    // ghostMovement(ghosts[3]);
+    //setDirtyPosition();
+
+    ghostMovement();
+    //console.log(ghostsProp);
+
     //collectiblePosition(collect);
 
     //checkHit();
