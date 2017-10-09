@@ -15,55 +15,63 @@ function createGroundPlane()
 }
 
 function createGhost(startPos, color, name){
-    var ghost = generateGhost(color, name);
+    var ghost = {
+        mesh: generateGhost(color, name),
+        speedX: 0,
+        speedY: .2
+    };
 
-    ghost.position.x = startPos;
-    ghost.position.z = 5;
-    scene.add(ghost);
+    generateGhost(color, name);
 
-    ghost.__dirtyPosition = true;
-    ghost.__dirtyRotation = true;
+    ghost.mesh.position.x = startPos;
+    ghost.mesh.position.z = 5;
+    scene.add(ghost.mesh);
 
-    ghost.addEventListener('collision', function (otherObject, linear, angular) {
+
+
+    ghost.mesh.addEventListener('collision', function (otherObject, linear, angular) {
         if(otherObject.name === 'player'){
             console.log('hit player');
+            resetScore();
+            document.getElementById('score').innerHTML = 'Score: ' + getScore();
+
         }
         if(otherObject.name === 'wall'){
             console.log('hit wall');
-            if(speedX > 0){
+            if(ghost.speedX > 0){
                 console.log('i am going right');
-                speedX = 0;
+                ghost.speedX = 0;
                 if(this.position.y > ball.position.y){
-                    speedY = -.2;
+                    ghost.speedY = -.2;
                 }else{
-                    speedY = .2;
+                    ghost.speedY = .2;
                 }
             }
-            if(speedX < 0){
+            if(ghost.speedX < 0){
                 console.log('i am going left');
-                speedX = 0;
+                ghost.speedX = 0;
                 if(this.position.y > ball.position.y){
-                    speedY = -.2;
+                    ghost.speedY = -.2;
                 }else{
-                    speedY = .2;
+                    ghost.speedY = .2;
                 }
             }
-            if(speedY > 0){
+            if(ghost.speedY > 0){
                 console.log('I am going up or down');
-                speedY = 0;
+                ghost.speedY = 0;
                 if(this.position.x > ball.position.x){
-                    speedX = -.2;
+                    ghost.speedX = -.2;
                 }else{
-                    speedX = .2;
+                    ghost.speedX = .2;
                 }
             }
-            if(speedY < 0){
+            if(ghost.speedY < 0){
                 console.log('I am going up or down');
-                speedY = 0;
+                ghost.speedY = 0;
                 if(this.position.x > ball.position.x){
-                    speedX = -.2;
+                    ghost.speedX = -.2;
                 }else{
-                    speedX = .2;
+                    ghost.speedX = .2;
                 }
             }
         }
@@ -108,6 +116,8 @@ function createGhosts(){
 
                 if(otherObject.name === 'player'){
                     console.log(otherObject.name);
+
+                    resetScore();
                 }
                 if(otherObject.name === 'wall'){
                     onWallCollision(ghosts[i], ghostsProp[i], otherObject, linearVelocity, angularVelocity);
@@ -150,6 +160,9 @@ function createCollectible(posX, posY){
     collect.addEventListener('collision', function (otherObject, linearVelocity, angularVelocity) {
         if(otherObject.name === 'player'){
             console.log('collected');
+            playSound("assets/sounds/waka.mp3");
+            addScore();
+            document.getElementById('score').innerHTML = 'Score: ' + getScore();
             scene.remove(this);
         }
     })

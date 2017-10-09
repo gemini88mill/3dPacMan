@@ -1,0 +1,15 @@
+h1, html, div, body{
+    background-color: black;
+    color: deepskyblue;
+    font-family: VCR, sans-serif;
+
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+@font-face {
+    font-family: VCR;
+    src: url("../assets/fonts/VCR_OSD_MONO_1.001.ttf");
+    font-weight: 400;
+}
+

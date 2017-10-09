@@ -60,5 +60,20 @@ function coinFlip() {
     return -.2;
 }
 
+var score = 0;
+
+function getScore(){
+    return score.toString();
+}
+
+function addScore(){
+
+    score += 100;
+}
+
+function resetScore(){
+    score = 0;
+}
+
 
 

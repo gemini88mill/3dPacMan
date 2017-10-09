@@ -21,6 +21,9 @@ var ghostPosition;
 var speedX = 0;
 var speedY = .2;
 
+var score = 0;
+
+var isPaused;
 
 
 var wallHit = false;
@@ -53,6 +56,7 @@ function init()
     ghosts.push(createGhost(20, '#ff0000', 'bob'));
 
 
+    loadBackgroundMusic();
 
     // Output to the stream
     document.body.appendChild( renderer.domElement );
@@ -66,11 +70,17 @@ function render()
 {
 
 
-    scene.simulate(); //physics
+    if(!isPaused) {
+        scene.simulate();
+    }
+    //physics
     cameraMovement();
     //setDirtyPosition();
 
-    ghostMovement();
+    ghostMovement(ghosts[0]);
+    ghostMovement(ghosts[1]);
+    ghostMovement(ghosts[2]);
+    ghostMovement(ghosts[3]);
     //console.log(ghostsProp);
 
     //collectiblePosition(collect);
@@ -136,7 +146,7 @@ function loadBackgroundMusic(){
     var audioLoader = new THREE.AudioLoader();
 
 //Load a sound and set it as the Audio object's buffer
-    audioLoader.load( 'assets/music/background_music/StarFighter.mp3', function( buffer ) {
+    audioLoader.load( 'assets/music/staywithme.mp3', function( buffer ) {
         sound.setBuffer( buffer );
         sound.setLoop(false);
         sound.setVolume(0.2);
@@ -172,5 +182,7 @@ function hintMenu(){
         x.style.display = 'none';
     }
 }
+
+
 
 window.onload = init;

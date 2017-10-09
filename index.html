@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>3d Pacman</title>
 
+    <link rel="stylesheet" type="text/css" href="css/custom.css"/>
+
     <!--libs for game-->
     <script type="text/javascript" src="libs/three.min.js"></script>
     <script type="text/javascript" src="libs/keyboard.js"></script>
@@ -17,18 +19,26 @@
     <script type="text/javascript" src="js/utils.js"></script>
     <script type="text/javascript" src="js/generate.js"></script>
 
+
+
 </head>
 <body>
 
-<script src="js/3dPacMan.js"></script>
-<button onclick="hintMenu()">Hints:</button>
-<div class="title" id="hintMenu" style="display: none">
-    Controls:<br>
-    Move Up: W<br>
-    Move Down: S<br>
-    Move Left: A<br>
-    Move Right: D<br>
-    Jump: Space<br>
+<div id="div">
+    <h1 id="score">Score:</h1>
+
+
+    <button onclick="hintMenu()">Hints:</button>
+    <div class="title" id="hintMenu" style="display: none">
+        Controls:<br>
+        Move Up: W<br>
+        Move Down: S<br>
+        Move Left: A<br>
+        Move Right: D<br>
+        Jump: Space<br>
+    </div>
 </div>
+
+<script src="js/3dPacMan.js"></script>
 </body>
 </html>

@@ -52,22 +52,22 @@ function setDirtyPosition(){
     ghosts[0].__dirtyRotation = true;
 }
 
-function ghostMovement(){
+function ghostMovement(ghost){
 
-    for(var i = 0; i < ghosts.length; i++){
-        ghosts[i].__dirtyRotation = true;
-        ghosts[i].__dirtyRotation = true;
+    // for(var i = 0; i < ghosts.length; i++){
+    //     ghosts[i].__dirtyRotation = true;
+    //     ghosts[i].__dirtyRotation = true;
+    //
+    //     ghosts[i].position.x += speedX;
+    //     ghosts[i].position.y += speedY;
+    //
+    // }
 
-        ghosts[i].position.x += speedX;
-        ghosts[i].position.y += speedY;
 
-    }
-
-
-    // ghosts[0].__dirtyPosition = true;
-    // ghosts[0].__dirtyRotation = true;
-    // ghosts[0].position.y += speedY;
-    // ghosts[0].position.x += speedX;
+    ghost.mesh.__dirtyPosition = true;
+    ghost.mesh.__dirtyRotation = true;
+    ghost.mesh.position.y += ghost.speedY;
+    ghost.mesh.position.x += ghost.speedX;
 
 
 
